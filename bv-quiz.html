@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ru" style="background:#050505;color-scheme:dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark only">
+<title>BEAT.VISION — Квиз для команды</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050505;
+  --ink:#fff;
+  --muted:#7e7e7e;
+  --line:#1e1e1e;
+  --field:#0e0e0e;
+  --accent:#FF2D18;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:#050505!important;color-scheme:dark}
+body{
+  background:#050505!important;color:#fff;
+  min-height:100vh;
+  font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+.wrap{max-width:700px;margin:0 auto;padding:0 24px}
+
+/* progress */
+.prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:60;transition:width .25s ease-out}
+
+/* header */
+header{position:sticky;top:0;z-index:40;background:rgba(5,5,5,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:15px 0}
+.logo{font-family:'Unbounded';font-weight:800;font-size:15px;letter-spacing:.02em}
+.logo i{font-style:normal;color:var(--accent)}
+.count{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* hero */
+.hero{padding:100px 0 68px;border-bottom:1px solid var(--line);position:relative}
+.hero h1{font-family:'Unbounded';font-weight:800;font-size:clamp(32px,8vw,58px);line-height:1;letter-spacing:-.03em}
+.hero h1 i{font-style:normal;color:var(--accent)}
+.hero p{margin-top:24px;color:var(--muted);max-width:50ch}
+.meta{margin-top:32px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--muted)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+
+/* sections */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.head{display:flex;align-items:baseline;gap:14px;margin-bottom:32px}
+.num{font-family:'Unbounded';font-weight:600;font-size:12px;color:var(--accent);letter-spacing:.06em}
+.head h2{font-family:'Unbounded';font-weight:600;font-size:19px;letter-spacing:-.01em}
+
+/* fields */
+.f{margin-bottom:26px}
+label{display:block;font-weight:500;font-size:14.5px;margin-bottom:8px}
+.hint{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:3px}
+input[type=text],input[type=email],input[type=tel],input[type=url],input[type=number],select,textarea{
+  width:100%;background:var(--field);color:var(--ink);
+  border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+  font:inherit;font-size:15px;transition:border-color .18s,background .18s;
+}
+textarea{min-height:92px;resize:vertical;line-height:1.5}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);background:#131313}
+select{appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 19px) 21px,calc(100% - 14px) 21px;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+
+/* file */
+input[type=file]{width:100%;font-size:13.5px;color:var(--muted);
+  background:var(--field);border:1px dashed var(--line);border-radius:10px;padding:14px}
+input[type=file]::file-selector-button{
+  background:transparent;color:var(--accent);border:1px solid var(--accent);
+  border-radius:999px;padding:7px 14px;margin-right:12px;font:inherit;font-size:13px;cursor:pointer}
+
+/* chips */
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt span{display:block;cursor:pointer;user-select:none;border:1px solid var(--line);
+  border-radius:999px;padding:9px 15px;font-size:13.5px;color:var(--muted);transition:.18s}
+.opt input:checked+span{border-color:var(--accent);color:var(--ink);background:rgba(255,45,24,.12)}
+.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+
+/* submit */
+.send{padding:52px 0 96px}
+button{width:100%;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:19px;
+  cursor:pointer;font-family:'Unbounded';font-weight:600;font-size:15px;transition:opacity .18s}
+button:hover{opacity:.88}
+button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.note{margin-top:14px;font-size:12.5px;color:var(--muted);text-align:center}
+@media(prefers-color-scheme:light){html,body{background:#050505;color:#fff}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}*{transition:none!important}}
+</style>
+</head>
+<body style="background:#050505;color:#fff">
+
+<div class="prog" id="prog"></div>
+
+<header>
+  <div class="wrap bar">
+    <div class="logo">BEAT<i>.</i>VISION</div>
+    <div class="count" id="count">0 / 29</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Мы хотим знать,<br>кто ты <i>на самом деле</i></h1>
+    <p>Из этих ответов соберётся твоя карточка в базе команды. По ней мы поймём, какие задачи тебе подойдут, а какие — точно нет. Отвечай честно, скучные ответы никого не спасут.</p>
+    <div class="meta">
+      <div class="pill">15 минут</div>
+      <div class="pill">29 вопросов</div>
+      <div class="pill">Видит только команда</div>
+    </div>
+  </div>
+
+  <form action="https://formsubmit.co/mykytaalymov@gmail.com" method="POST" enctype="multipart/form-data" id="form">
+    <input type="hidden" name="_subject" value="BEAT.VISION — новый ответ на квиз">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+
+    <section class="rv">
+      <div class="head"><div class="num">01</div><h2>Знакомимся</h2></div>
+      <div class="f"><label>Как зовут? Представься<span class="hint">Как в паспорте, и как на самом деле, если это разные вещи</span></label><input type="text" name="Как зовут" required></div>
+      <div class="two">
+        <div class="f"><label>Город и страна<span class="hint">Чтобы знать, в каком часовом поясе тебя не будить</span></label><input type="text" name="Город и страна"></div>
+        <div class="f"><label>Почта<span class="hint">Куда писать по делу</span></label><input type="email" name="Почта" required></div>
+      </div>
+      <div class="f"><label>Три слова о себе<span class="hint">Первое что пришло в голову, не думай долго</span></label><input type="text" name="3 слова о себе"></div>
+      <div class="f"><label>Жизненное кредо<span class="hint">Даже если это строчка из мема — считается</span></label><input type="text" name="Жизненное кредо"></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">02</div><h2>Профессия</h2></div>
+      <div class="f"><label>Профессиональный бэкграунд<span class="hint">Коротко: откуда пришёл и что натворил по пути</span></label><textarea name="Профессиональный бэкграунд" required></textarea></div>
+      <div class="f"><label>Роль, в которой хочешь работать<span class="hint">Назови так, как сам это видишь</span></label><input type="text" name="Роль в которой хочешь работать" required></div>
+      <div class="f"><label>В чём ты реально крутой<span class="hint">Твоя суперсила. Без ложной скромности</span></label><textarea name="В чём ты реально крутой" required></textarea></div>
+      <div class="f"><label>Ссылка на лучшие работы<span class="hint">Портфолио, кейсы, чем можно похвастаться</span></label><input type="url" name="Ссылка на работы" placeholder="https://"></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">03</div><h2>Навыки</h2></div>
+      <div class="f">
+        <label>Ключевые навыки<span class="hint">Всё что умеешь, даже если скромничаешь</span></label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Design"><span>Design</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Video"><span>Video</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Photo"><span>Photo</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Sound/Music"><span>Sound/Music</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Marketing"><span>Marketing</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Copywriting"><span>Copywriting</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Content"><span>Content</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Strategy"><span>Strategy</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Sales"><span>Sales</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="PM"><span>PM</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Ops"><span>Ops</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Dev"><span>Dev</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="AI"><span>AI</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Education"><span>Education</span></label>
+          <label class="opt"><input type="checkbox" name="Ключевые навыки" value="Community"><span>Community</span></label>
+        </div>
+      </div>
+      <div class="f"><label>Уровень и конкретика<span class="hint">По каждому навыку: насколько владеешь и что конкретно сделаешь сам</span></label><textarea name="Навыки уровень и конкретика" required></textarea></div>
+      <div class="f"><label>Инструменты<span class="hint">Софт, железо, магия — что угодно</span></label><textarea name="Инструменты"></textarea></div>
+      <div class="f"><label>Чем можешь помогать дополнительно<span class="hint">Скилы, которых нет в резюме, но они пригодятся</span></label><textarea name="Чем помогу дополнительно"></textarea></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">04</div><h2>Работа с нами</h2></div>
+      <div class="f">
+        <label>Ближайший пиллар<span class="hint">Куда тянет больше всего</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="Ближайший пиллар" value="Agency"><span>Agency</span></label>
+          <label class="opt"><input type="radio" name="Ближайший пиллар" value="School"><span>School</span></label>
+          <label class="opt"><input type="radio" name="Ближайший пиллар" value="Social Club"><span>Social Club</span></label>
+          <label class="opt"><input type="radio" name="Ближайший пиллар" value="CYAN OS"><span>CYAN OS</span></label>
+        </div>
+      </div>
+      <div class="f">
+        <label>Формат работы<span class="hint">Как удобнее</span></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="Формат работы" value="Remote"><span>Remote</span></label>
+          <label class="opt"><input type="radio" name="Формат работы" value="Hybrid"><span>Hybrid</span></label>
+          <label class="opt"><input type="radio" name="Формат работы" value="Onsite"><span>Onsite</span></label>
+        </div>
+      </div>
+      <div class="two">
+        <div class="f"><label>Часов в неделю<span class="hint">Реалистично, а не как в резюме</span></label><input type="number" name="Часов в неделю" min="1" max="80"></div>
+        <div class="f"><label>Ожидаемый доход в месяц<span class="hint">Останется между тобой и Notion</span></label><input type="text" name="Ожидаемый доход" placeholder="напр. 2000 EUR"></div>
+      </div>
+      <div class="f"><label>KPI, которые готов деливерить<span class="hint">Конкретные цифры, а не «стараться по мере сил»</span></label><textarea name="KPI" required></textarea></div>
+      <div class="f"><label>Что цепляет в BEAT.VISION<span class="hint">Честно, без реверансов в нашу сторону</span></label><textarea name="Что цепляет в Beat Vision"></textarea></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">05</div><h2>Амбиции</h2></div>
+      <div class="f"><label>Кем хочешь стать через год<span class="hint">Мечтай смело, стесняться поздно</span></label><textarea name="Кем стать через год" required></textarea></div>
+      <div class="f"><label>Идеальный рабочий месяц<span class="hint">Опиши мечту, посмотрим что можем сделать</span></label><textarea name="Идеальный рабочий месяц"></textarea></div>
+      <div class="f"><label>Тип проектов<span class="hint">От чего горят глаза</span></label><textarea name="Тип проектов"></textarea></div>
+      <div class="f"><label>Как измеряешь свой успех<span class="hint">Твоя личная линейка</span></label><textarea name="Как измеряешь успех"></textarea></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">06</div><h2>Взгляд на индустрию</h2></div>
+      <div class="f"><label>Отношение к AI в творчестве<span class="hint">Друг, враг, инструмент или всё сразу</span></label><textarea name="Отношение к AI" required></textarea></div>
+      <div class="f"><label>Каким видишь будущее креативной индустрии<span class="hint">Пофантазируй, неправильных ответов нет</span></label><textarea name="Будущее индустрии"></textarea></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">07</div><h2>Человеческое</h2></div>
+      <div class="f"><label>Хобби вне работы<span class="hint">Да, сериалы и сон тоже считаются</span></label><textarea name="Хобби"></textarea></div>
+      <div class="f"><label>Музыка, которую слушаешь<span class="hint">Плейлист, жанр, артист — что играет пока работаешь</span></label><textarea name="Музыка"></textarea></div>
+      <div class="f"><label>Фильмы, книги, арт<span class="hint">Что тебя слепило как личность</span></label><textarea name="Фильмы книги арт"></textarea></div>
+    </section>
+
+    <section class="rv">
+      <div class="head"><div class="num">08</div><h2>Два фото</h2></div>
+      <div class="f"><label>Фото для Notion<span class="hint">Серьёзное лицо, мы же профессионалы</span></label><input type="file" name="Фото для Notion" accept="image/*"></div>
+      <div class="f"><label>Фото, чтобы поржать<span class="hint">Мем, детская фотка, кот — здесь можно расслабиться</span></label><input type="file" name="Фото поржать" accept="image/*"></div>
+    </section>
+
+    <div class="send rv">
+      <button type="submit">Отправить</button>
+      <p class="note">Ответы уходят в базу команды BEAT.VISION</p>
+    </div>
+  </form>
+</div>
+
+<script>
+// scroll reveal
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// progress + answered counter
+const form=document.getElementById('form');
+const prog=document.getElementById('prog');
+const count=document.getElementById('count');
+const groups=[...new Set([...form.querySelectorAll('input:not([type=hidden]),select,textarea')]
+  .map(el=>el.name))];
+const total=groups.length;
+count.textContent='0 / '+total;
+
+function answered(){
+  let n=0;
+  groups.forEach(name=>{
+    const els=form.querySelectorAll('[name="'+name+'"]');
+    let done=false;
+    els.forEach(el=>{
+      if(el.type==='checkbox'||el.type==='radio'){if(el.checked)done=true}
+      else if(el.type==='file'){if(el.files.length)done=true}
+      else if(el.value.trim())done=true;
+    });
+    if(done)n++;
+  });
+  return n;
+}
+function refresh(){
+  const n=answered();
+  count.textContent=n+' / '+total;
+  prog.style.width=(n/total*100)+'%';
+}
+form.addEventListener('input',refresh);
+form.addEventListener('change',refresh);
+</script>
+</body>
+</html>
