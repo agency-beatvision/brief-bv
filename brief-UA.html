@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<title>BEAT.VISION — Бриф</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --beat:#FF2D18;
+  --dim:#8A8A8A;
+  --line:#242424;
+  --field:#0B0B0B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#000!important;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:#000!important;color:#FFFFFF!important;
+  font-family:'Inter',system-ui,sans-serif;font-weight:300;
+  font-size:16px;line-height:1.6;min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+header,main,section,footer,.hero{background:#000}
+
+/* ---------- HEADER ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(0,0,0,.9);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.bar{
+  max-width:940px;margin:0 auto;padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.logo svg{display:block}
+.logo span{
+  font-family:'Unbounded',sans-serif;font-weight:800;
+  font-size:14px;letter-spacing:.15em;text-transform:uppercase;
+}
+.bar small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--beat);width:0;transition:width .25s ease}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:62vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:100px 24px;border-bottom:1px solid var(--line);
+}
+h1{
+  font-family:'Unbounded',sans-serif;font-weight:800;color:#fff;
+  font-size:clamp(34px,7.5vw,72px);line-height:1.02;letter-spacing:-.02em;
+  text-transform:uppercase;
+}
+h1 em{font-style:normal;color:var(--beat)}
+
+/* ---------- SECTIONS ---------- */
+main{max-width:940px;margin:0 auto;padding:0 24px}
+section{padding:60px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;gap:20px;align-items:baseline;margin-bottom:38px}
+.num{font-family:'Unbounded',sans-serif;font-weight:600;font-size:12px;color:var(--beat);letter-spacing:.1em;padding-top:4px}
+h2{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(21px,3.4vw,29px);letter-spacing:-.01em;color:#fff}
+.sec-head p{color:var(--dim);font-size:14px;margin-top:6px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.full{grid-column:1/-1}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+
+label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+label .req{color:var(--beat)}
+input,textarea,select{
+  width:100%;background:var(--field);color:#fff;
+  border:1px solid var(--line);border-radius:2px;
+  padding:14px 15px;font-family:inherit;font-size:15px;font-weight:300;
+  transition:border-color .18s ease,background .18s ease;
+}
+textarea{min-height:110px;resize:vertical}
+select{appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),linear-gradient(135deg,var(--dim) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 22px,calc(100% - 15px) 22px;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+select option{background:#0B0B0B;color:#fff}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--beat);background:#111}
+::placeholder{color:#4A4A4A}
+
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;width:0;height:0}
+.chip span{
+  display:block;padding:10px 16px;border:1px solid var(--line);border-radius:999px;
+  font-size:14px;color:var(--dim);cursor:pointer;transition:all .18s ease;user-select:none;
+}
+.chip input:checked + span{border-color:var(--beat);color:#fff;background:rgba(255,45,24,.1)}
+.chip input:focus-visible + span{outline:2px solid var(--beat);outline-offset:2px}
+
+/* ---------- SUBMIT ---------- */
+.send{padding:64px 0 88px;text-align:center}
+button{
+  font-family:'Unbounded',sans-serif;font-weight:600;
+  background:var(--beat);color:#fff;border:none;border-radius:2px;
+  padding:20px 56px;font-size:14px;letter-spacing:.14em;text-transform:uppercase;
+  cursor:pointer;transition:transform .18s ease,opacity .18s ease;
+}
+button:hover{transform:translateY(-2px)}
+button:disabled{opacity:.4;cursor:wait;transform:none}
+.status{margin-top:24px;font-size:14px;min-height:22px;color:var(--dim)}
+.status.ok{color:var(--beat)}
+.status.err{color:#FF6B5A}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);padding:52px 24px;text-align:center}
+footer .logo{justify-content:center}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="#">
+      <svg width="30" height="19" viewBox="0 0 60 38" fill="none" aria-label="BEAT.VISION">
+        <path d="M2 19C2 19 12 4 30 4C48 4 58 19 58 19C58 19 48 34 30 34C12 34 2 19 2 19Z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/>
+        <path d="M22 12L30 26L38 12" stroke="#fff" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="round"/>
+      </svg>
+      <span>BEAT.VISION</span>
+    </a>
+    <small>Brief</small>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<div class="hero">
+  <h1>Tell me<br>something<em>.</em></h1>
+</div>
+
+<main>
+  <section>
+    <div class="sec-head"><span class="num">01</span><div><h2>Контакти</h2><p>Куди повернутися з відповіддю</p></div></div>
+    <div class="grid">
+      <div class="full"><label>Назва проєкту або компанії <span class="req">*</span></label><input name="Name" required></div>
+      <div><label>Контактна особа</label><input name="Контактное лицо" placeholder="Ім’я та роль"></div>
+      <div><label>Email</label><input type="email" name="Email" placeholder="you@company.com"></div>
+      <div><label>Телефон або месенджер</label><input name="Телефон / мессенджер" placeholder="+48 ..."></div>
+      <div><label>Сайт</label><input type="url" name="WEB" placeholder="https://"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">02</span><div><h2>Компанія</h2><p>Контекст, у якому працюємо</p></div></div>
+    <div class="grid">
+      <div class="full"><label>Чим займається компанія</label><textarea name="Чем занимается компания" placeholder="Що продаєте і кому"></textarea></div>
+      <div><label>Галузь або ніша</label><input name="Отрасль / ниша"></div>
+      <div><label>Стадія бізнесу</label><select name="Стадия бизнеса"><option value="">—</option><option value="Стартап (до 10 чел.)">Стартап (до 10 осіб)</option><option value="SMB (10–50 чел.)">SMB (10–50 осіб)</option><option value="Средний бизнес (50–200 чел.)">Середній бізнес (50–200 осіб)</option><option value="Enterprise (200+ чел.)">Enterprise (200+ осіб)</option></select></div>
+      <div><label>Бізнес-модель</label><select name="Бизнес-модель"><option value="">—</option><option value="B2B">B2B</option><option value="B2C">B2C</option><option value="B2B &amp; B2C">B2B &amp; B2C</option><option value="B2G">B2G</option></select></div>
+      <div><label>Географічне охоплення</label><select name="Географический охват"><option value="">—</option><option value="Один город">Одне місто</option><option value="Страна">Країна</option><option value="Европа">Європа</option><option value="Весь мир">Весь світ</option></select></div>
+      <div class="full"><label>Цільова аудиторія</label><textarea name="Целевая аудитория" placeholder="Хто купує, як вирішує"></textarea></div>
+      <div class="full"><label>Чим відрізняєтеся від конкурентів</label><textarea name="Отличие от конкурентов"></textarea></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">03</span><div><h2>Завдання</h2><p>Головний блок брифу</p></div></div>
+    <div class="grid">
+      <div class="full"><label>Яку проблему хочете вирішити <span class="req">*</span></label><textarea name="Какую проблему хотите решить" required placeholder="Що не працює зараз"></textarea></div>
+      <div class="full"><label>Три головні бізнес-цілі</label><textarea name="3 главных бизнес-цели"></textarea></div>
+      <div><label>Очікуваний результат за 1–3 місяці</label><textarea name="Ожидаемый результат за 1-3 месяца"></textarea></div>
+      <div><label>Як вимірюватимете успіх</label><textarea name="Как измерите успех (KPI)" placeholder="Метрики та цифри"></textarea></div>
+      <div class="full"><label>Напрями</label><div class="chips" data-multi="Направления">
+        <label class="chip"><input type="checkbox" value="Marketing"><span>Marketing</span></label>
+        <label class="chip"><input type="checkbox" value="Design"><span>Design</span></label>
+        <label class="chip"><input type="checkbox" value="Automation"><span>Automation</span></label>
+        <label class="chip"><input type="checkbox" value="Events"><span>Events</span></label>
+        <label class="chip"><input type="checkbox" value="Production"><span>Production</span></label>
+      </div></div>
+      <div class="full"><label>Тип контенту та робіт</label><div class="chips" data-multi="Тип контента и работ">
+        <label class="chip"><input type="checkbox" value="Посты / подписи"><span>Пости / підписи</span></label>
+        <label class="chip"><input type="checkbox" value="Reels / видео-сценарии"><span>Reels / відеосценарії</span></label>
+        <label class="chip"><input type="checkbox" value="Stories"><span>Stories</span></label>
+        <label class="chip"><input type="checkbox" value="Статьи / лонгриды"><span>Статті / лонгріди</span></label>
+        <label class="chip"><input type="checkbox" value="Email-копирайтинг"><span>Email-копірайтинг</span></label>
+        <label class="chip"><input type="checkbox" value="Рекламные тексты"><span>Рекламні тексти</span></label>
+        <label class="chip"><input type="checkbox" value="Карусели / слайды"><span>Каруселі / слайди</span></label>
+        <label class="chip"><input type="checkbox" value="AI-видеопродакшн"><span>AI-відеопродакшн</span></label>
+        <label class="chip"><input type="checkbox" value="Чат-бот / поддержка клиентов"><span>Чат-бот / підтримка</span></label>
+        <label class="chip"><input type="checkbox" value="CRM / Email-автоматизация"><span>CRM / Email-автоматизація</span></label>
+        <label class="chip"><input type="checkbox" value="Сбор данных / отчётность"><span>Збір даних / звітність</span></label>
+        <label class="chip"><input type="checkbox" value="Внутренние workflow"><span>Внутрішні workflow</span></label>
+        <label class="chip"><input type="checkbox" value="Дизайн / брендинг"><span>Дизайн / брендинг</span></label>
+        <label class="chip"><input type="checkbox" value="Ивент"><span>Івент</span></label>
+        <label class="chip"><input type="checkbox" value="Другое"><span>Інше</span></label>
+      </div></div>
+      <div class="full"><label>Платформи</label><div class="chips" data-multi="Платформы">
+        <label class="chip"><input type="checkbox" value="Instagram"><span>Instagram</span></label>
+        <label class="chip"><input type="checkbox" value="TikTok"><span>TikTok</span></label>
+        <label class="chip"><input type="checkbox" value="LinkedIn"><span>LinkedIn</span></label>
+        <label class="chip"><input type="checkbox" value="Facebook"><span>Facebook</span></label>
+        <label class="chip"><input type="checkbox" value="YouTube"><span>YouTube</span></label>
+        <label class="chip"><input type="checkbox" value="Блог / Сайт"><span>Блог / Сайт</span></label>
+        <label class="chip"><input type="checkbox" value="Email-рассылка"><span>Email-розсилка</span></label>
+        <label class="chip"><input type="checkbox" value="Другое"><span>Інше</span></label>
+      </div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">04</span><div><h2>Бренд</h2><p>Як звучите і як виглядаєте</p></div></div>
+    <div class="grid">
+      <div><label>Тон комунікації</label><select name="Тон коммуникации бренда"><option value="">—</option><option value="Профессиональный / Экспертный">Професійний / Експертний</option><option value="Дружелюбный / Непринуждённый">Дружній / Невимушений</option><option value="Вдохновляющий / Мотивирующий">Надихаючий / Мотивуючий</option><option value="Юмористический / Остроумный">Гумористичний / Дотепний</option><option value="Люкс / Премиум">Люкс / Преміум</option><option value="Дерзкий / Провокационный">Зухвалий / Провокативний</option></select></div>
+      <div><label>Брендбук</label><select name="Брендбук"><option value="">—</option><option value="Да — пришлю файл">Так — надішлю файл</option><option value="Нет — нужна помощь">Ні — потрібна допомога</option><option value="В процессе разработки">У процесі розробки</option></select></div>
+      <div class="full"><label>Конкуренти та надихаючі приклади</label><textarea name="Конкуренты и вдохновляющие примеры" placeholder="Посилання і що саме подобається"></textarea></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">05</span><div><h2>Технології та AI</h2><p>З чим уже працюєте</p></div></div>
+    <div class="grid">
+      <div><label>Досвід з AI-інструментами</label><select name="Опыт с AI-инструментами"><option value="">—</option><option value="Да — активно">Так — активно</option><option value="Немного пробовали">Трохи пробували</option><option value="Нет — это первый раз">Ні — це вперше</option></select></div>
+      <div><label>Готовність команди до AI</label><select name="Готовность команды к AI"><option value="">—</option><option value="Энтузиасты">Ентузіасти</option><option value="Нейтральные — нужны доказательства">Нейтральні — потрібні докази</option><option value="Скептики">Скептики</option></select></div>
+      <div><label>Чи є технічна команда</label><select name="Есть ли техническая / IT-команда"><option value="">—</option><option value="Да — штатная">Так — штатна</option><option value="Частичная компетенция">Часткова компетенція</option><option value="На аутсорсе">На аутсорсі</option><option value="Нет">Ні</option></select></div>
+      <div><label>Вимоги до даних та GDPR</label><select name="GDPR / требования к данным"><option value="">—</option><option value="Строгие требования">Суворі вимоги</option><option value="Стандартные требования">Стандартні вимоги</option><option value="Не знаю — нужна консультация">Не знаю — потрібна консультація</option></select></div>
+      <div><label>Які AI-інструменти пробували</label><textarea name="Какие AI-инструменты пробовали"></textarea></div>
+      <div><label>Поточний стек інструментів</label><textarea name="Текущий стек инструментов" placeholder="CRM, аналітика, розсилки"></textarea></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="num">06</span><div><h2>Умови</h2><p>Бюджет, терміни, формат</p></div></div>
+    <div class="grid">
+      <div><label>Бюджетний діапазон</label><select name="Бюджетный диапазон"><option value="">—</option><option value="До 500€">До 500€</option><option value="500–1500€">500–1500€</option><option value="1500–3000€">1500–3000€</option><option value="3000–7000€">3000–7000€</option><option value="7000€+">7000€+</option><option value="Не знаю — нужна консультация">Не знаю — потрібна консультація</option></select></div>
+      <div><label>Формат співпраці</label><select name="Формат сотрудничества"><option value="">—</option><option value="Разовый проект">Разовий проєкт</option><option value="Постоянное сотрудничество">Постійна співпраця</option><option value="Разовое внедрение под ключ">Разове впровадження під ключ</option><option value="Ещё не определился">Ще не визначився</option></select></div>
+      <div><label>Бажана дата старту</label><input name="Желаемая дата старта" placeholder="Наприклад: середина вересня"></div>
+      <div><label>Дедлайн та важливі дати</label><input name="Ключевые даты"></div>
+      <div><label>Працювали з агенцією раніше</label><select name="Работали с агентством раньше"><option value="">—</option><option value="Да">Так</option><option value="Нет">Ні</option></select></div>
+      <div><label>Досвід з попередньою агенцією</label><textarea name="Опыт с предыдущим агентством" placeholder="Що спрацювало, що ні"></textarea></div>
+      <div class="full"><label>Питання до нас</label><textarea name="Вопросы к нам"></textarea></div>
+      <div class="full"><label>Що ще нам варто знати</label><textarea name="Дополнительная информация"></textarea></div>
+    </div>
+  </section>
+
+  <div class="send">
+    <button id="send">Надіслати бриф</button>
+    <div class="status" id="status"></div>
+  </div>
+</main>
+
+<footer>
+  <a class="logo" href="#">
+    <svg width="26" height="17" viewBox="0 0 60 38" fill="none" aria-label="BEAT.VISION">
+      <path d="M2 19C2 19 12 4 30 4C48 4 58 19 58 19C58 19 48 34 30 34C12 34 2 19 2 19Z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/>
+      <path d="M22 12L30 26L38 12" stroke="#fff" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="round"/>
+    </svg>
+    <span>BEAT.VISION</span>
+  </a>
+</footer>
+
+<script>
+// ⬇️ ЕДИНСТВЕННОЕ, ЧТО НУЖНО ЗАПОЛНИТЬ.
+// Сюда вставляется URL вебхука, который принимает JSON и создаёт
+// карточку в базе Leads. Ключ интеграции Notion СЮДА НЕ ПИШЕТСЯ —
+// исходник страницы виден всем, кто её откроет.
+const WEBHOOK_URL = "";
+
+const statusEl = document.getElementById('status');
+const btn = document.getElementById('send');
+const bar = document.getElementById('progress');
+
+addEventListener('scroll', () => {
+  const h = document.body.scrollHeight - innerHeight;
+  bar.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + '%';
+});
+
+function collect() {
+  const data = {};
+  document.querySelectorAll('input[name], textarea[name], select[name]').forEach(el => {
+    const v = el.value.trim();
+    if (v) data[el.name] = v;
+  });
+  document.querySelectorAll('.chips[data-multi]').forEach(box => {
+    const picked = [...box.querySelectorAll('input:checked')].map(i => i.value);
+    if (picked.length) data[box.dataset.multi] = picked;
+  });
+  data['Status'] = '🆕 Новый лид';
+  data['Отправлено'] = new Date().toISOString();
+  return data;
+}
+
+btn.addEventListener('click', async () => {
+  const data = collect();
+
+  if (!data['Name']) {
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Заповніть назву проєкту — без неї бриф не надішлеться.';
+    return;
+  }
+  if (!data['Какую проблему хотите решить']) {
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Опишіть завдання — це єдине поле, без якого не обійтися.';
+    return;
+  }
+  if (!WEBHOOK_URL) {
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Прийом заявок ще не підключено. Напишіть нам напряму.';
+    return;
+  }
+
+  btn.disabled = true;
+  statusEl.className = 'status';
+  statusEl.textContent = 'Надсилаємо…';
+
+  try {
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(res.status);
+    statusEl.className = 'status ok';
+    statusEl.textContent = 'Бриф надіслано. Відповімо протягом двох робочих днів.';
+    btn.textContent = 'Надіслано';
+  } catch (e) {
+    btn.disabled = false;
+    statusEl.className = 'status err';
+    statusEl.textContent = 'Не вдалося надіслати. Перевірте зв’язок і спробуйте ще раз.';
+  }
+});
+</script>
+</body>
+</html>
